@@ -6,47 +6,104 @@
   <title>WIP</title>
   <style>
     body {
-      background-color: black;
-      color: lime;
-      font-family: monospace;
+      background-color: #000;
+      color: #0f0;
+      font-family: 'Courier New', monospace;
       padding: 20px;
       margin: 0;
+      overflow-x: hidden;
     }
+
+    .logo {
+      position: fixed;
+      top: 10px;
+      left: 15px;
+      font-weight: bold;
+      font-size: 24px;
+      color: #0f0;
+      background: linear-gradient(90deg, #0f0, #0ff, #0f0);
+      background-size: 200% auto;
+      border: 2px solid #0f0;
+      padding: 5px 10px;
+      animation: brillo 3s linear infinite;
+      z-index: 999;
+    }
+
+    @keyframes brillo {
+      0% { background-position: 0% center; }
+      100% { background-position: 200% center; }
+    }
+
     .terminal {
       background-color: #111;
       padding: 15px;
       border: 2px solid #0f0;
-      height: 400px;
+      height: 300px;
       overflow-y: auto;
       white-space: pre-wrap;
       margin-top: 15px;
     }
-    button, input {
+
+    button, input, .option-btn {
       margin-top: 10px;
       padding: 10px;
       font-weight: bold;
       border: none;
+      font-family: monospace;
+      transition: all 0.3s ease;
     }
-    button {
-      background: lime;
+
+    button, .option-btn {
+      background: #0f0;
+      color: #000;
       cursor: pointer;
+      border-radius: 4px;
     }
+
+    button:hover, .option-btn:hover {
+      transform: scale(1.05);
+      background: #0c0;
+    }
+
     input {
       width: 100%;
       background: #222;
-      color: lime;
+      color: #0f0;
       border: 1px solid #0f0;
     }
-    .logo {
+
+    .menu-opciones {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .option-btn {
+      flex: 1 1 45%;
+      min-width: 140px;
+    }
+
+    .instagram-btn {
       position: fixed;
-      top: 8px;
-      left: 12px;
+      bottom: 10px;
+      right: 10px;
+      background: linear-gradient(45deg, #ff00cc, #3333ff);
+      color: white;
+      padding: 10px 15px;
+      border-radius: 8px;
+      border: none;
       font-weight: bold;
-      color: lime;
-      font-size: 18px;
-      background: rgba(0,255,0,0.1);
-      padding: 2px 6px;
-      border: 1px solid lime;
+      cursor: pointer;
+      animation: flotar 2s infinite ease-in-out;
+      text-decoration: none;
+      z-index: 999;
+    }
+
+    @keyframes flotar {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+      100% { transform: translateY(0); }
     }
   </style>
 </head>
@@ -57,16 +114,26 @@
   <input type="text" id="nombreRed" placeholder="Ej: WIFI_CASA_123" />
   <button onclick="iniciarHackeo()">Comenzar</button>
 
+  <div class="menu-opciones">
+    <button class="option-btn">Escaneo WiFi</button>
+    <button class="option-btn">Ataque de diccionario</button>
+    <button class="option-btn">Spoofing MAC</button>
+    <button class="option-btn">Packet Sniffer</button>
+    <button class="option-btn">Salir</button>
+  </div>
+
   <div class="terminal" id="terminal">
     Esperando entrada del usuario...
   </div>
+
+  <a class="instagram-btn" href="https://instagram.com/el_wawin_" target="_blank">@el_wawin_</a>
 
   <script>
     const terminal = document.getElementById("terminal");
 
     function generarContraseñaRouter() {
       const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-      const longitud = Math.floor(Math.random() * 7) + 10; // Entre 10 y 16
+      const longitud = Math.floor(Math.random() * 7) + 10;
       let pass = "";
       for (let i = 0; i < longitud; i++) {
         pass += chars.charAt(Math.floor(Math.random() * chars.length));
