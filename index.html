@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simulador Hacker WiFi ULTRA+</title>
+  <style>
+    body {
+      background-color: black;
+      color: lime;
+      font-family: monospace;
+      padding: 20px;
+    }
+    .terminal {
+      background-color: #111;
+      padding: 15px;
+      border: 2px solid #0f0;
+      height: 400px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+    }
+    button, input {
+      margin-top: 10px;
+      padding: 10px;
+      font-weight: bold;
+      border: none;
+    }
+    button {
+      background: lime;
+      cursor: pointer;
+    }
+    input {
+      width: 100%;
+      background: #222;
+      color: lime;
+      border: 1px solid #0f0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Simulador Hacker WiFi ULTRA+</h1>
+  <p>Escribí el nombre de la red WiFi que querés "hackear":</p>
+  <input type="text" id="nombreRed" placeholder="Ej: WIFI_CASA_123" />
+  <button onclick="iniciarHackeo()">Iniciar hackeo</button>
+
+  <div class="terminal" id="terminal">
+    Esperando entrada del usuario...
+  </div>
+
+  <script>
+    const terminal = document.getElementById("terminal");
+
+    function generarContraseñaRouter() {
+      const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+      const longitud = Math.floor(Math.random() * 7) + 10; // 10 a 16 caracteres
+      let pass = "";
+      for (let i = 0; i < longitud; i++) {
+        pass += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return pass;
+    }
+
+    function sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    async function iniciarHackeo() {
+      const red = document.getElementById("nombreRed").value.trim();
+      if (!red) {
+        alert("Por favor escribí el nombre de la red WiFi.");
+        return;
+      }
+
+      terminal.textContent = `Iniciando escaneo...\nRed detectada: ${red} [Señal fuerte]\n`;
+      await sleep(1000);
+      terminal.textContent += `\nSeleccionando red: ${red}\n`;
+      terminal.textContent += `Iniciando ataque de diccionario...\n`;
+
+      for (let i = 0; i < 25; i++) {
+        let intento = generarContraseñaRouter();
+        await sleep(200);
+        terminal.textContent += `Probando contraseña: ${intento}...\n`;
+        terminal.scrollTop = terminal.scrollHeight;
+      }
+
+      let correcta = generarContraseñaRouter();
+      await sleep(1000);
+      terminal.textContent += `\n¡Contraseña encontrada!: ${correcta}\n`;
+      terminal.textContent += `¡Acceso concedido a ${red}!\n`;
+      terminal.scrollTop = terminal.scrollHeight;
+    }
+  </script>
+</body>
+</html>
